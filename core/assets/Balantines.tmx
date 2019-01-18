@@ -3,12 +3,12 @@
  <tileset firstgid="1" source="tmgs_tiles.tsx"/>
  <layer id="1" name="Background" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztw0ENAAAMA6GzUP9mp2I/SFg1VVVVVVVVVVVVVVXVxwcpM88x
+   eJzt2DsKwCAQRVG34PrdbPqQHxnwMXCKAxbCYHFRXGOMFTSB35Lt6hdq9At96Rf60i/0pV/oK9WrfqEuddfqF+pS72T9Qp1+oa/d3Z7nps8PnSXanR/3AM/uurtav/1D6Rf2OgBUnpp6
   </data>
  </layer>
  <layer id="3" name="Graphics" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJzt08EJwCAABEFrSAEp2A7SrfkIEqIgKCrMwP3vsyEAAAAAANn97lp9AuiW231WHwG6lO3qF87xbVe/cIa/dvUL+6u1q1/YW6td/cIYcdJa7eoXxkhN+B37
+   eJzt08EJwCAABEFrSAHpzqLSrfkIEqIgKCrMwP3vsyEAAAAAANn97lp9AuiW231WHwG6lO3qF87xbVe/cIa/dvUL+6u1q1/YW6td/cIYcdJa7eoXxkjmUBrN
   </data>
  </layer>
  <objectgroup id="4" name="Ground">
