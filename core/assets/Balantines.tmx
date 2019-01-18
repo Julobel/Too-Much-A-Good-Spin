@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="70" tileheight="70" infinite="0" nextlayerid="5" nextobjectid="19">
+ <tileset firstgid="1" source="tmgs_tiles.tsx"/>
+ <layer id="1" name="Background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAMA6GzUP9mp2I/SFg1VVVVVVVVVVVVVVXVxwcpM88x
+  </data>
+ </layer>
+ <layer id="3" name="Graphics" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt08EJwCAABEFrSAEp2A7SrfkIEqIgKCrMwP3vsyEAAAAAANn97lp9AuiW231WHwG6lO3qF87xbVe/cIa/dvUL+6u1q1/YW6td/cIYcdJa7eoXxkhN+B37
+  </data>
+ </layer>
+ <objectgroup id="4" name="Ground">
+  <object id="17" x="0" y="840" width="1750" height="70"/>
+  <object id="18" x="1540" y="840">
+   <polygon points="0,0 490,-490 490,0"/>
+  </object>
+ </objectgroup>
+</map>
