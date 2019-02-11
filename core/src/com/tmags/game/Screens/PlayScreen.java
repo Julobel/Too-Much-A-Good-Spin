@@ -103,10 +103,16 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        cameraRotate(delta);
         renderer.render();
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+    }
+
+    private void cameraRotate(float delta) {
+        gamecam.rotate(1.0f * -delta);
+        gamecam.update();
     }
 
     @Override
