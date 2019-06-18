@@ -9,6 +9,7 @@ public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         if (contact.getFixtureB().getBody().getUserData().equals("BottomLimit") ){
+            System.out.println("JE SUIS AL'");
             contact.getFixtureA().getBody().setLinearVelocity(0,0);
         }
     }

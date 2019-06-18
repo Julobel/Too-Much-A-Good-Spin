@@ -17,16 +17,15 @@ public class Ground extends Sprite {
     private Vector2 originalPos;
     private float currentYPos;
 
-
     public Ground(World world, OrthographicCamera gamecam){
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         bdef.type = BodyDef.BodyType.KinematicBody;
-        Integer floorHeight = 30;
+        Integer floorHeight = 120;
         bdef.position.set(gamecam.position.x,gamecam.viewportHeight + floorHeight);
         body = world.createBody(bdef);
-        originalPos = new Vector2(150 ,10 );
+        originalPos = new Vector2(500 ,15);
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
         body.createFixture(fdef).setUserData("BottomLimit");
@@ -57,7 +56,6 @@ public class Ground extends Sprite {
             if (floorNewRotation >= -0.3f && floorNewRotation <= 0.3f){
                 body.setTransform(body.getPosition(),floorNewRotation);
             }
-
         }
     }
 }

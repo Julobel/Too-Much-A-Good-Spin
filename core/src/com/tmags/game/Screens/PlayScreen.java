@@ -31,7 +31,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(TooMuchAGoodSpin game){
         this.game = game;
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(TooMuchAGoodSpin.V_WIDTH, TooMuchAGoodSpin.V_HEIGHT, gamecam);
+        gameport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, gamecam);
         hud = new Hud(game.batch);
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
