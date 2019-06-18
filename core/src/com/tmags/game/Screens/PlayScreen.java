@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.Scenes.Hud;
+import com.tmags.game.Sprites.Mario;
 import com.tmags.game.TooMuchAGoodSpin;
 
 public class PlayScreen implements Screen {
@@ -31,33 +32,34 @@ public class PlayScreen implements Screen {
 
     private World world;
     private Box2DDebugRenderer b2dr;
+    private Mario player;
 
 
     public PlayScreen(TooMuchAGoodSpin game){
         this.game = game;
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(TooMuchAGoodSpin.V_WIDTH, TooMuchAGoodSpin.V_HEIGHT, gamecam);
+        gameport = new FitViewport(TooMuchAGoodSpin.V_WIDTH / TooMuchAGoodSpin.PPM, TooMuchAGoodSpin.V_HEIGHT / TooMuchAGoodSpin.PPM, gamecam);
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Balantines.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map, 1/ TooMuchAGoodSpin.PPM);
         gamecam.position.set(gameport.getWorldWidth()/2, gameport.getWorldHeight()/2,0);
 
-        world = new World(new Vector2(0,0),true);
+        world = new World(new Vector2(0,-8 / TooMuchAGoodSpin.PPM),true);
         b2dr = new Box2DDebugRenderer();
-
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
 
+        player = new Mario(world);
 
         for (MapObject object: map.getLayers().get(2).getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                bdef.type = BodyDef.BodyType.DynamicBody;
+                bdef.type = BodyDef.BodyType.StaticBody;
                 bdef.position.set(rect.getX() + rect.getWidth() /2,rect.getY() + rect.getHeight()/2);
 
                 body = world.createBody(bdef);
@@ -68,7 +70,7 @@ public class PlayScreen implements Screen {
 
             if (object instanceof PolygonMapObject) {
             Polygon polygon = ((PolygonMapObject) object).getPolygon();
-                bdef.type = BodyDef.BodyType.DynamicBody;
+                bdef.type = BodyDef.BodyType.StaticBody;
                 bdef.position.set(polygon.getX(),polygon.getY());
                 body = world.createBody(bdef);
                 float[] vertices = polygon.getVertices().clone();
@@ -87,6 +89,7 @@ public class PlayScreen implements Screen {
 
     public void update (float dt) {
         handleInput(dt);
+        world.step(1/60f,6,2);
         gamecam.update();
         hud.update(dt);
         gamecam.update();

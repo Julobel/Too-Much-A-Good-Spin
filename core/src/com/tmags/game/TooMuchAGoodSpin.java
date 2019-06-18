@@ -7,6 +7,8 @@ import com.tmags.game.Screens.PlayScreen;
 public class TooMuchAGoodSpin extends Game {
 	public static final int V_WIDTH = 1200;
 	public static final int V_HEIGHT = 624;
+	public static final int PPM = 100;
+
 	public SpriteBatch batch;
 	
 	@Override
