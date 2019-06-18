@@ -11,9 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -22,55 +20,69 @@ import com.tmags.game.TooMuchAGoodSpin;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 
 public class Hud implements Disposable{
-    //private final Label.LabelStyle style;
+
     public Stage stage;
     private Viewport viewport;
-    private Skin skin;
-    private ProgressBar progressBar;
     private Integer worldTimer;
     private float timeCount;
     private Integer score;
     private Label gamerLabel;
     private Label countUpLabel;
     private Label timeLabel;
-    private static Label scoreLabel;
+    private Label scoreLabel;
     private Label levelLabel;
     private Label tmpLabel;
-    private ProgressBar.ProgressBarStyle progressBarStyle;
-    private Texture textureBar;
-    private ProgressBar.ProgressBarStyle barStyle;
-    private Drawable drawable;
+    public ProgressBar healthBar;
+    private float healthValue = 100f;
 
     public Hud (SpriteBatch sb) {
+
         worldTimer = 0;
         timeCount = 0f;
         score = 0;
-
         viewport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
-        skin = new Skin();
 
-
-        // TODO Refactor ProgressBar
-        /*skin = new Skin();
-        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
+        /**
+         * Gestion bar de vie
+         */
+        Pixmap pixmap = new Pixmap(100, 15, Format.RGBA8888);
+        pixmap.setColor(Color.RED);
         pixmap.fill();
-        skin.add("white", new Texture(pixmap));
 
-        Pixmap pixmapv2 = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
-        pixmapv2.setColor(Color.RED);
-        pixmapv2.fill();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
 
-        drawable = new Drawable(new Pixmap(Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(), new Format.Alpha), 1);
+        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
+        progressBarStyle.background = drawable;
 
-        // textureBar = new Texture(Gdx.files.internal("./assets/baglogic.jpg"));
-        barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), pixmapv2);
-        barStyle.knobBefore = barStyle.knob;
-        progressBar = new ProgressBar(0f,10f,1f,false, barStyle);
-        progressBarStyle = new ProgressBar.ProgressBarStyle();
-        progressBar.setStyle(progressBarStyle);*/
+        pixmap = new Pixmap(0, 15, Format.RGBA8888);
+        pixmap.setColor(Color.GREEN);
+        pixmap.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        progressBarStyle.knob = drawable;
+
+        pixmap = new Pixmap(40, 15, Format.RGBA8888);
+        pixmap.setColor(Color.GREEN);
+        pixmap.fill();
+        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        pixmap.dispose();
+
+        progressBarStyle.knobBefore = drawable;
+
+        stage = new Stage();
+
+        healthBar = new ProgressBar(0f, 100f, 0.1f, false, progressBarStyle);
+        healthBar.setValue(healthValue);
+        healthBar.setAnimateDuration(0.5f);
+        healthBar.setBounds(370, 600, 550, 15);
+
+        stage.addActor(healthBar);
+
+        stage.draw();
+        stage.act();
 
         // Création de la table, permet de positionner des éléments enfants
         Table table = new Table();
@@ -78,7 +90,7 @@ public class Hud implements Disposable{
         // La taille du table sera prendra la taille du stage
         table.setFillParent(true);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/blockheads/Blockheads.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/nervous/Nervous.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 50;
         parameter.minFilter = Texture.TextureFilter.Linear;
@@ -86,7 +98,6 @@ public class Hud implements Disposable{
 
         final Label.LabelStyle style = new Label.LabelStyle();
         style.font = generator.generateFont(parameter);
-        //style = new Label.LabelStyle(generator.generateFont(parameter));
         countUpLabel = new Label(String.format("%03d", worldTimer), style);
         scoreLabel = new Label(String.format("%06d", score), style);
         timeLabel = new Label("TIME", style);
@@ -95,12 +106,14 @@ public class Hud implements Disposable{
         gamerLabel = new Label("Joueur 1", style);
         tmpLabel = new Label("", style);
 
+        /**
+         * Positionnement des éléments
+         */
         table.add(gamerLabel).padLeft(10).padTop(10).uniform();
         table.add(levelLabel).expandX().padTop(10).uniform();
         table.add(timeLabel).padRight(10).padTop(10).uniform();
         table.row();
         table.add(scoreLabel).padLeft(10).uniform();
-        // table.add(progressBar).expandX().uniform();
         table.add(tmpLabel).expandX().uniform();
         table.add(countUpLabel).padRight(10).uniform();
 
@@ -110,14 +123,17 @@ public class Hud implements Disposable{
     public void update (float dt){
         timeCount += dt;
         if(timeCount >= 1){
+            healthValue -= 10f;
+            healthBar.setValue(healthValue);
+            stage.draw();
+            stage.act();
+            System.out.println(healthBar.getValue());
             worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
+            score += 10 * (Math.round(worldTimer));
+            scoreLabel.setText(String.format("%06d", score));
             timeCount = 0f;
         }
-    }
-
-    public static void addScore (int value){
-        // TODO MAJ SCORE
     }
 
     @Override

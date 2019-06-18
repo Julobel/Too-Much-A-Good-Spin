@@ -32,8 +32,6 @@ public class PlayState extends GameState {
 
     @Override
     public void init() {
-        System.out.println("OUILLE V2");
-
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
 
