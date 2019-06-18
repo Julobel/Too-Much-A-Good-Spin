@@ -28,7 +28,7 @@ public class Ground extends Sprite {
         originalPos = new Vector2(500 ,15);
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
-        body.createFixture(fdef).setUserData("BottomLimit");
+        body.createFixture(fdef).setUserData("GroundLimit");
     }
 
 
@@ -38,7 +38,7 @@ public class Ground extends Sprite {
             this.currentState = "BUMPING";
         }
         this.currentYPos = body.getPosition().y;
-        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 35){
+        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 110){
             body.setLinearVelocity(new Vector2(0, -200f));
         }
 
