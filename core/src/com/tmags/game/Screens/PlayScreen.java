@@ -18,8 +18,9 @@ public class PlayScreen implements Screen {
     public PlayScreen(TooMuchAGoodSpin game){
         this.game = game;
         gamecam = new OrthographicCamera();
-        gameport = new FitViewport(TooMuchAGoodSpin.V_WIDTH, TooMuchAGoodSpin.V_HEIGHT, gamecam);
+        gameport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, gamecam);
         hud = new Hud(game.batch);
+        System.out.println("HEEEEEEEEEEEEY");
     }
 
     @Override
@@ -28,7 +29,6 @@ public class PlayScreen implements Screen {
     }
 
     public void update (float dt) {
-
         hud.update(dt);
         gamecam.update();
     }
