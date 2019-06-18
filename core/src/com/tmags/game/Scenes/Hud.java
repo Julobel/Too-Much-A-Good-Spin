@@ -29,7 +29,7 @@ public class Hud implements Disposable{
     private ProgressBar progressBar;
     private Integer worldTimer;
     private float timeCount;
-    private Integer score;
+    private static Integer score;
     private Label gamerLabel;
     private Label countUpLabel;
     private Label timeLabel;
@@ -118,6 +118,8 @@ public class Hud implements Disposable{
 
     public static void addScore (int value){
         // TODO MAJ SCORE
+        score += value;
+        scoreLabel.setText(String.format("%06d", score));
     }
 
     @Override

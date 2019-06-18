@@ -8,10 +8,15 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
-        if (contact.getFixtureB().getBody().getUserData().equals("BottomLimit") ){
-            System.out.println("JE SUIS AL'");
+        if ("BottomLimit".equals(contact.getFixtureB().getBody().getUserData())){
             contact.getFixtureA().getBody().setLinearVelocity(0,0);
         }
+
+        if("DeathLimit".equals(contact.getFixtureA().getBody().getUserData())) {
+            System.out.println("l alcool tue");
+
+        }
+
     }
 
     @Override

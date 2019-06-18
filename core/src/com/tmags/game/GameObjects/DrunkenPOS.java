@@ -6,6 +6,11 @@ import com.badlogic.gdx.physics.box2d.*;
 public class DrunkenPOS extends Sprite {
 
     private Body body;
+    public enum State {ALIVE,DEAD};
+    public State currentPlayerState;
+    public State previousPlayerState;
+    private boolean playerDead;
+
 
     public DrunkenPOS(World world){
         BodyDef bdef = new BodyDef();
@@ -24,8 +29,19 @@ public class DrunkenPOS extends Sprite {
         body.setUserData("Player");
         body.createFixture(fdef);
 
+
     }
 
+    public State getPlayerState() {
+        if (playerDead)
+            return State.DEAD;
+        else
+            return State.ALIVE;
+    }
+
+    public void hit() {
+
+    }
     private void initDrunkenPOS(){
 
     }

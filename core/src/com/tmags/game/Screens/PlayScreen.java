@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.GameObjects.BottomLimit;
+import com.tmags.game.GameObjects.Death;
 import com.tmags.game.GameObjects.DrunkenPOS;
 import com.tmags.game.GameObjects.Ground;
 import com.tmags.game.Scenes.Hud;
@@ -27,6 +28,7 @@ public class PlayScreen implements Screen {
     private Ground ground;
     private DrunkenPOS drunkenPOS;
     private BottomLimit bottomLimit;
+    private Death deathLimit;
 
     public PlayScreen(TooMuchAGoodSpin game){
         this.game = game;
@@ -40,6 +42,7 @@ public class PlayScreen implements Screen {
         drunkenPOS = new DrunkenPOS(world);
         ground = new Ground(world, gamecam);
         bottomLimit = new BottomLimit(world, gamecam);
+        deathLimit = new Death(world,gamecam);
         b2dr = new Box2DDebugRenderer();
     }
 
