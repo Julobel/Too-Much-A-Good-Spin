@@ -3,19 +3,23 @@ package com.tmags.game.Scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.TooMuchAGoodSpin;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 
 public class Hud implements Disposable{
     //private final Label.LabelStyle style;
@@ -23,27 +27,50 @@ public class Hud implements Disposable{
     private Viewport viewport;
     private Skin skin;
     private ProgressBar progressBar;
-
     private Integer worldTimer;
     private float timeCount;
     private Integer score;
     private Label gamerLabel;
-
     private Label countUpLabel;
     private Label timeLabel;
     private static Label scoreLabel;
     private Label levelLabel;
     private Label tmpLabel;
+    private ProgressBar.ProgressBarStyle progressBarStyle;
+    private Texture textureBar;
+    private ProgressBar.ProgressBarStyle barStyle;
+    private Drawable drawable;
 
     public Hud (SpriteBatch sb) {
         worldTimer = 0;
         timeCount = 0f;
         score = 0;
 
-        viewport = new FitViewport(TooMuchAGoodSpin.V_WIDTH, TooMuchAGoodSpin.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         skin = new Skin();
-        //progressBar = new ProgressBar(0f,10f,1f,false, skin);
+
+
+        // TODO Refactor ProgressBar
+        /*skin = new Skin();
+        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
+
+        Pixmap pixmapv2 = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
+        pixmapv2.setColor(Color.RED);
+        pixmapv2.fill();
+
+        drawable = new Drawable(new Pixmap(Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(), new Format.Alpha), 1);
+
+        // textureBar = new Texture(Gdx.files.internal("./assets/baglogic.jpg"));
+        barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), pixmapv2);
+        barStyle.knobBefore = barStyle.knob;
+        progressBar = new ProgressBar(0f,10f,1f,false, barStyle);
+        progressBarStyle = new ProgressBar.ProgressBarStyle();
+        progressBar.setStyle(progressBarStyle);*/
 
         // Création de la table, permet de positionner des éléments enfants
         Table table = new Table();
@@ -53,7 +80,7 @@ public class Hud implements Disposable{
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/blockheads/Blockheads.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
+        parameter.size = 50;
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
 
@@ -90,7 +117,7 @@ public class Hud implements Disposable{
     }
 
     public static void addScore (int value){
-        // TODO
+        // TODO MAJ SCORE
     }
 
     @Override
