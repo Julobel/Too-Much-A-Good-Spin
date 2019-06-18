@@ -1,3 +1,7 @@
+/**
+ * Created by Jules Aubel on 17/06/19.
+ */
+
 package com.tmags.game;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -8,9 +12,6 @@ import com.tmags.game.Managers.GameInputProcessor;
 import com.tmags.game.Managers.GameKeys;
 import com.tmags.game.Managers.GameStateManager;
 
-/**
- * Created by Jules Aubel on 17/06/19.
- */
 public class Main implements ApplicationListener {
 
     public static int WIDTH;

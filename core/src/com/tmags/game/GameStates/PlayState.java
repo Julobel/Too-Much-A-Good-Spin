@@ -42,6 +42,8 @@ public class PlayState extends GameState {
         cam.update();
 
         batch = new SpriteBatch();
+        game = new TooMuchAGoodSpin();
+        game.create();
     }
 
     @Override
@@ -51,12 +53,11 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-
     }
 
     @Override
     public void draw() {
-
+        game.render();
     }
 
     @Override

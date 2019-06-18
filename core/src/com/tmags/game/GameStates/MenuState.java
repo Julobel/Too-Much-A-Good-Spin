@@ -84,11 +84,7 @@ public class MenuState extends GameState{
 
         // Affichage menu
         for (int i = 0; i < menuItems.length; i++) {
-            if (currentItem == i) {
-                font.setColor(Color.RED);
-            } else {
-                font.setColor(Color.WHITE);
-            }
+            font.setColor(currentItem == i ? Color.RED : Color.WHITE);
             font.draw(
                     sb,
                     menuItems[i],
@@ -129,12 +125,16 @@ public class MenuState extends GameState{
      * Déclanchement action menu
      */
     private void select() {
-        if(currentItem == 0) {
-            gsm.setGameState(GameStateManager.PLAY);
-        } else if(currentItem == 1) {
-            // MENU SCORE
-        } else if(currentItem == 2) {
-            Gdx.app.exit();
+        switch (currentItem) {
+            case 0:
+                gsm.setGameState(GameStateManager.PLAY);
+                break;
+            case 1:
+                // MENU SCORE
+                break;
+            case 2:
+                Gdx.app.exit();
+                break;
         }
     }
 
