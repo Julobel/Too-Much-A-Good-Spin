@@ -90,10 +90,11 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         sb.begin();
         sb.draw(bg, 0,0);
+        ground.draw(sb);
         drunkenPOS.draw(sb);
         sb.end();
         hud.stage.draw();
-        b2dr.render(world, gamecam.combined);
+        //b2dr.render(world, gamecam.combined);
 
     }
 

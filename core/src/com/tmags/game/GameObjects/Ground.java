@@ -3,7 +3,10 @@ package com.tmags.game.GameObjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -13,8 +16,10 @@ public class Ground extends Sprite {
     private String currentState;
     private Vector2 originalPos;
     private float currentYPos;
+    private float floorNewRotation;
 
     public Ground(World world, OrthographicCamera gamecam){
+        super(new Texture("ground.png"));
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -25,6 +30,7 @@ public class Ground extends Sprite {
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
         body.createFixture(fdef).setUserData("GroundLimit");
+        setBounds(0,0, 1000, 70);
     }
 
 
@@ -40,7 +46,7 @@ public class Ground extends Sprite {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             Float floorCurrentRotation = body.getTransform().getRotation();
-            Float floorNewRotation = 0f;
+            floorNewRotation = 0f;
             Float floorActionRation = 0.01f;
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
                 floorNewRotation =  floorCurrentRotation - floorActionRation;
@@ -54,4 +60,11 @@ public class Ground extends Sprite {
             }
         }
     }
+
+    public void draw(SpriteBatch sb){
+
+        System.out.println(floorNewRotation);
+        sb.draw(new TextureRegion(getTexture(), 0,0,1000,280),body.getPosition().x  - getWidth() , (body.getPosition().y - getHeight() * 7 ) + 80,1000,(body.getPosition().y + getHeight() / 2) + 350,2000,560,1f,1f,floorNewRotation * 55f);
+    }
+
 }
