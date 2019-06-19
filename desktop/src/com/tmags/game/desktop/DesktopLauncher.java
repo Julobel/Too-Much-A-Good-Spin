@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.title = "Too much a good spin";
 		config.width = 1280;
 		config.height = 720;
-		config.useGL30 = false;
+		config.useGL30 = true;
 		config.resizable = false;
 
 		new LwjglApplication(new Main(), config);

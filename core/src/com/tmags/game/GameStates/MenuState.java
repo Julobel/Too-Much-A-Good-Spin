@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.tmags.game.GameObjects.Player;
 import com.tmags.game.Main;
 import com.tmags.game.Managers.GameStateManager;
 
@@ -128,6 +129,7 @@ public class MenuState extends GameState{
         switch (currentItem) {
             case 0:
                 gsm.setGameState(GameStateManager.PLAY);
+                Player.isAlive = true;
                 break;
             case 1:
                 // MENU SCORE

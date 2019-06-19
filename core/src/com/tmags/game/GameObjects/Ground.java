@@ -21,7 +21,7 @@ public class Ground extends Sprite {
         bdef.type = BodyDef.BodyType.KinematicBody;
         bdef.position.set(gamecam.position.x,gamecam.viewportHeight + 10);
         body = world.createBody(bdef);
-        originalPos = new Vector2(500 ,15);
+        originalPos = new Vector2(700 ,15);
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
         body.createFixture(fdef).setUserData("GroundLimit");
