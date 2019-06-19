@@ -96,7 +96,7 @@ public class Hud implements Disposable{
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/nervous/Nervous.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 50;
+        parameter.size = 35;
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
 
@@ -131,8 +131,6 @@ public class Hud implements Disposable{
             healthBar.setValue(currentPlayer.life);
             stage.draw();
             stage.act();
-            System.out.println(healthBar.getValue());
-            System.out.println(currentPlayer.life);
             worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
             score += 10 * (Math.round(worldTimer));

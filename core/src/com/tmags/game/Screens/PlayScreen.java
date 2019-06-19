@@ -12,10 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.tmags.game.GameObjects.BottomLimit;
-import com.tmags.game.GameObjects.DrunkenPOS;
-import com.tmags.game.GameObjects.Ground;
-import com.tmags.game.GameObjects.Player;
+import com.tmags.game.GameObjects.*;
 import com.tmags.game.Scenes.Hud;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.tmags.game.Utils.WorldContactListener;
@@ -34,10 +31,13 @@ public class PlayScreen implements Screen {
     private DrunkenPOS drunkenPOS;
     private BottomLimit bottomLimit;
     private Player currentPlayer;
+    private Enemy enemy;
+    private float timeCount;
 
     private TextureAtlas textureAtlas;
 
     public PlayScreen(TooMuchAGoodSpin game){
+        timeCount = 0f;
         textureAtlas = new TextureAtlas("perso.txt");
         this.game = game;
         sb = new SpriteBatch();
@@ -73,6 +73,12 @@ public class PlayScreen implements Screen {
         ground.moveGround();
         drunkenPOS.update();
         gamecam.update();
+        timeCount += dt;
+        if(timeCount >= 3){
+            enemy = new Enemy(world);
+            timeCount = 0f;
+        }
+
     }
 
     @Override

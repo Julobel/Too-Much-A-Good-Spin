@@ -102,21 +102,17 @@ public class MenuState extends GameState{
      */
     @Override
     public void handleInput() {
-        System.out.println(currentItem);
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            System.out.println("UP");
             if(currentItem > 0) {
                 currentItem--;
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            System.out.println("DOWN");
             if(currentItem < menuItems.length - 1) {
                 currentItem++;
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            System.out.println("ENTER");
             select();
         }
     }

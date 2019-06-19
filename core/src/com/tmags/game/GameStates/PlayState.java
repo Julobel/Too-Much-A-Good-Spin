@@ -4,16 +4,11 @@
 
 package com.tmags.game.GameStates;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.tmags.game.Main;
-import com.tmags.game.Managers.GameKeys;
 import com.tmags.game.Managers.GameStateManager;
-import com.tmags.game.Screens.PlayScreen;
 import com.tmags.game.TooMuchAGoodSpin;
 
 public class PlayState extends GameState {

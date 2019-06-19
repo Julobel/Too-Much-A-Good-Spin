@@ -11,15 +11,21 @@ public class WorldContactListener implements ContactListener {
         if (contact.getFixtureB().getBody().getUserData().equals("BottomLimit") ){
             contact.getFixtureA().getBody().setLinearVelocity(0,0);
         }
+
+        if (contact.getFixtureB().getBody().getUserData().equals("Enemy")) {
+            /*contact.getFixtureB().getBody().applyLinearImpulse(
+                    -100000000.0f,
+                    0.0f,
+                    contact.getFixtureA().getBody().getPosition().x,
+                    contact.getFixtureA().getBody().getPosition().y,
+                    false
+            );*/
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
-        if (contact.getFixtureB().getBody().getUserData().equals("Player")){
 
-
-
-        }
     }
 
     @Override
@@ -32,4 +38,4 @@ public class WorldContactListener implements ContactListener {
 
     }
 
-};
+}
