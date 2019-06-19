@@ -10,10 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Enemy extends Sprite{
     private Body body;
     private Direction currentDirection;
     public enum Direction {RIGHT, LEFT};
+
 
     public Enemy(World world) {
         super(new Texture("livreur.png"));
@@ -24,18 +28,26 @@ public class Enemy extends Sprite{
         CircleShape shape = new CircleShape();
 
         // fdef.restitution = 0.8f;
-        fdef.friction = 0.1f;
+        fdef.density = 0.1f;
         bdef.type = BodyDef.BodyType.DynamicBody;
 
         int xPosition = (int)(Math.random()*((200-800)+1))+800;
 
         bdef.position.set(xPosition,800);
         body = world.createBody(bdef);
+
         shape.setRadius(10);
         fdef.shape = shape;
-        body.setUserData("Enemy");
+
+        HashMap<String, Object> userData = new HashMap<String,Object>();
+        userData.put("objectType","Enemy");
+        userData.put("velocityX", Math.random() > 0.5 ? -1000000f : 1000000f);
+
+
+        body.setUserData(userData);
+
         body.createFixture(fdef);
-        body.setGravityScale(10);
+        body.setGravityScale(2);
         setBounds(0,0,100, 105);
     }
 

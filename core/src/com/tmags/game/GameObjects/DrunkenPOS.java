@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.tmags.game.Screens.PlayScreen;
 
+import java.util.HashMap;
+
 public class DrunkenPOS extends Sprite {
 
     private Body body;
@@ -26,13 +28,18 @@ public class DrunkenPOS extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         fdef.restitution = 0.8f;
-        fdef.friction = 0.02f;
+        fdef.friction = 0.5f;
+
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(640,190);
+
+
         body = world.createBody(bdef);
         shape.setRadius(10);
         fdef.shape = shape;
-        body.setUserData("Player");
+        HashMap<String, Object> userData = new HashMap<String,Object>();
+        userData.put("objectType","Player");
+        body.setUserData(userData);
         body.createFixture(fdef);
 
         playerFall = new TextureRegion(getTexture(), 0,0, 50, 119);
@@ -40,7 +47,7 @@ public class DrunkenPOS extends Sprite {
         currentRegion = playerStand;
         setBounds(0,0, 50, 119);
         setRegion(playerFall);
-
+        body.setGravityScale(0.8f);
     }
 
 

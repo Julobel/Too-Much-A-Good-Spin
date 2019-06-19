@@ -3,6 +3,8 @@ package com.tmags.game.GameObjects;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.*;
 
+import java.util.HashMap;
+
 public class BottomLimit {
     private Body body;
 
@@ -18,7 +20,10 @@ public class BottomLimit {
         fdef.shape = shape;
         fdef.isSensor = true;
         body.createFixture(fdef);
-        body.setUserData("BottomLimit");
+
+        HashMap<String, Object> userData = new HashMap<String,Object>();
+        userData.put("objectType","BottomLimit");
+        body.setUserData(userData);
         body.setGravityScale(0);
     }
 }
