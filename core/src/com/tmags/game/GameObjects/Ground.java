@@ -34,12 +34,12 @@ public class Ground extends Sprite {
 
     public void moveGround(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            body.setLinearVelocity(new Vector2(0, 200f));
+            body.setLinearVelocity(new Vector2(0, 400f));
             this.currentState = "BUMPING";
         }
         this.currentYPos = body.getPosition().y;
-        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 110){
-            body.setLinearVelocity(new Vector2(0, -200f));
+        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 130){
+            body.setLinearVelocity(new Vector2(0, -400f));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.GameObjects.BottomLimit;
 import com.tmags.game.GameObjects.DrunkenPOS;
 import com.tmags.game.GameObjects.Ground;
+import com.tmags.game.GameObjects.Player;
 import com.tmags.game.Scenes.Hud;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.tmags.game.Utils.WorldContactListener;
@@ -27,15 +28,17 @@ public class PlayScreen implements Screen {
     private Ground ground;
     private DrunkenPOS drunkenPOS;
     private BottomLimit bottomLimit;
+    private Player currentPlayer;
 
     public PlayScreen(TooMuchAGoodSpin game){
         this.game = game;
         gamecam = new OrthographicCamera();
         gameport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, gamecam);
-        hud = new Hud(game.batch);
+        currentPlayer = new Player();
+        hud = new Hud(game.batch, currentPlayer);
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
-        world = new World(new Vector2(0,- 50), true);
+        world = new World(new Vector2(0,- 120), true);
         world.setContactListener(new WorldContactListener());
         drunkenPOS = new DrunkenPOS(world);
         ground = new Ground(world, gamecam);

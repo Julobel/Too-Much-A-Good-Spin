@@ -13,7 +13,7 @@ public class DrunkenPOS extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        fdef.restitution = 0.8f;
+        // fdef.restitution = 0.8f;
         fdef.friction = 0.05f;
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(640,190);
@@ -23,7 +23,6 @@ public class DrunkenPOS extends Sprite {
         fdef.shape = shape;
         body.setUserData("Player");
         body.createFixture(fdef);
-
     }
 
     private void initDrunkenPOS(){
