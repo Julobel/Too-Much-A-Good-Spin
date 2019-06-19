@@ -24,11 +24,13 @@ public class Ground extends Sprite {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         bdef.type = BodyDef.BodyType.KinematicBody;
-        bdef.position.set(gamecam.position.x,gamecam.viewportHeight + 10);
+        Integer floorHeight = 120;
+        bdef.position.set(gamecam.position.x, 70);
         body = world.createBody(bdef);
-        originalPos = new Vector2(500 ,15);
+        originalPos = new Vector2(1000 ,70);
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
+
         body.createFixture(fdef).setUserData("GroundLimit");
         setBounds(0,0, 1000, 70);
     }

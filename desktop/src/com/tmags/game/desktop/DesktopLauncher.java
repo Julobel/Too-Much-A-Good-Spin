@@ -14,6 +14,7 @@ public class DesktopLauncher {
 		config.useGL30 = false;
 		config.resizable = false;
 
-		new LwjglApplication(new Main(), config);
+		//new LwjglApplication(new Main(), config);
+		new LwjglApplication(new TooMuchAGoodSpin(), config);
 	}
 }
