@@ -12,7 +12,7 @@ public class BottomLimit {
         FixtureDef fdef = new FixtureDef();
 
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.position.set(gamecam.position.x,gamecam.viewportHeight);
+        bdef.position.set(gamecam.position.x,-105);
         body = world.createBody(bdef);
         shape.setAsBox(30, 100);
         fdef.shape = shape;
