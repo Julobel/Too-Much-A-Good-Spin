@@ -116,6 +116,9 @@ public class Hud implements Disposable{
         }
     }
 
+
+
+
     public static void addScore (int value){
         // TODO MAJ SCORE
     }

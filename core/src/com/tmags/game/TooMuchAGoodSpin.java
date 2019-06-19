@@ -4,7 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.tmags.game.Managers.GameKeys;
 import com.tmags.game.Screens.PlayScreen;
 
@@ -13,11 +15,9 @@ public class TooMuchAGoodSpin extends Game {
 	public static int HEIGHT;
 	public static OrthographicCamera cam;
 	public SpriteBatch batch;
-
 	@Override
 	public void create () {
 
-	    System.out.println("OUILLE V2");
 
 	    WIDTH = Gdx.graphics.getWidth();
 	    HEIGHT = Gdx.graphics.getHeight();
@@ -28,6 +28,7 @@ public class TooMuchAGoodSpin extends Game {
 
 		batch = new SpriteBatch();
         setScreen(new PlayScreen(this));
+
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class TooMuchAGoodSpin extends Game {
         GameKeys.update();
 		super.render();
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();

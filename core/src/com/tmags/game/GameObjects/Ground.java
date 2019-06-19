@@ -23,9 +23,9 @@ public class Ground extends Sprite {
         FixtureDef fdef = new FixtureDef();
         bdef.type = BodyDef.BodyType.KinematicBody;
         Integer floorHeight = 120;
-        bdef.position.set(gamecam.position.x,gamecam.viewportHeight + floorHeight);
+        bdef.position.set(gamecam.position.x, 70);
         body = world.createBody(bdef);
-        originalPos = new Vector2(500 ,15);
+        originalPos = new Vector2(1000 ,70);
         shape.setAsBox(originalPos.x, originalPos.y);
         fdef.shape = shape;
         body.createFixture(fdef).setUserData("GroundLimit");
@@ -34,12 +34,12 @@ public class Ground extends Sprite {
 
     public void moveGround(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            body.setLinearVelocity(new Vector2(0, 200f));
+            body.setLinearVelocity(new Vector2(0, 1000f));
             this.currentState = "BUMPING";
         }
         this.currentYPos = body.getPosition().y;
-        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 110){
-            body.setLinearVelocity(new Vector2(0, -200f));
+        if ( "BUMPING".equals(this.currentState) && this.currentYPos >= originalPos.y + 35){
+            body.setLinearVelocity(new Vector2(0, -1000f));
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
