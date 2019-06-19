@@ -1,0 +1,26 @@
+perso.png
+size: 50, 357
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fall
+  rotate: false
+  xy: 0, 0
+  size: 50, 119
+  orig: 50, 119
+  offset: 0, 0
+  index: -1
+walk-1
+  rotate: false
+  xy: 0, 119
+  size: 50, 119
+  orig: 50, 119
+  offset: 0, 0
+  index: -1
+walk-2
+  rotate: false
+  xy: 0, 238
+  size: 50, 119
+  orig: 50, 119
+  offset: 0, 0
+  index: -1

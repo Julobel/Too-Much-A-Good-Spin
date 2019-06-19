@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tmags.game.GameObjects.Player;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 
@@ -33,15 +36,16 @@ public class Hud implements Disposable{
     private Label levelLabel;
     private Label tmpLabel;
     public ProgressBar healthBar;
-    private float healthValue = 100f;
+    private Player currentPlayer;
 
-    public Hud (SpriteBatch sb) {
+    public Hud (SpriteBatch sb, Player currenPlayer) {
 
         worldTimer = 0;
         timeCount = 0f;
         score = 0;
         viewport = new FitViewport(TooMuchAGoodSpin.WIDTH, TooMuchAGoodSpin.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
+        currentPlayer = currenPlayer;
 
         /**
          * Gestion bar de vie
@@ -75,7 +79,7 @@ public class Hud implements Disposable{
         stage = new Stage();
 
         healthBar = new ProgressBar(0f, 100f, 0.1f, false, progressBarStyle);
-        healthBar.setValue(healthValue);
+        healthBar.setValue(currenPlayer.life);
         healthBar.setAnimateDuration(0.5f);
         healthBar.setBounds(370, 600, 550, 15);
 
@@ -123,11 +127,12 @@ public class Hud implements Disposable{
     public void update (float dt){
         timeCount += dt;
         if(timeCount >= 1){
-            healthValue -= 10f;
-            healthBar.setValue(healthValue);
+            currentPlayer.life -= 10f;
+            healthBar.setValue(currentPlayer.life);
             stage.draw();
             stage.act();
             System.out.println(healthBar.getValue());
+            System.out.println(currentPlayer.life);
             worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
             score += 10 * (Math.round(worldTimer));

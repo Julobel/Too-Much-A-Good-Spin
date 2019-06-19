@@ -15,7 +15,11 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+        if (contact.getFixtureB().getBody().getUserData().equals("Player")){
 
+
+
+        }
     }
 
     @Override
