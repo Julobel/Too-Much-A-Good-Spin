@@ -68,7 +68,7 @@ public class Ground extends Sprite {
     public void draw(SpriteBatch sb){
 
         System.out.println(floorNewRotation);
-        sb.draw(new TextureRegion(getTexture(), 0,0,1000,280),body.getPosition().x  - getWidth() , (body.getPosition().y - getHeight() * 7 ) + 10,1000,(body.getPosition().y + getHeight() / 2) + 350,2000,560,1f,1f,floorNewRotation * 55f);
+        sb.draw(new TextureRegion(getTexture(), 0,0,1000,280),body.getPosition().x  - getWidth() , (body.getPosition().y - getHeight() * 7 ) + 80,1000,(body.getPosition().y + getHeight() / 2) + 350,2000,560,1f,1f,floorNewRotation * 55f);
     }
 
 }
