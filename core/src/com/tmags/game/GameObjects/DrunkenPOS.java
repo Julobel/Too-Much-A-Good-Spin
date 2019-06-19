@@ -25,8 +25,8 @@ public class DrunkenPOS extends Sprite {
         bdef.allowSleep = false;
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        // fdef.restitution = 0.8f;
-        fdef.friction = 0.05f;
+        fdef.restitution = 0.8f;
+        fdef.friction = 0.02f;
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(640,190);
         body = world.createBody(bdef);
@@ -40,6 +40,7 @@ public class DrunkenPOS extends Sprite {
         currentRegion = playerStand;
         setBounds(0,0, 50, 119);
         setRegion(playerFall);
+
     }
 
 

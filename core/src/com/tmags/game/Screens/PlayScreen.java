@@ -10,12 +10,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.GameObjects.*;
 import com.tmags.game.Scenes.Hud;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.tmags.game.Utils.WorldContactListener;
+
+import java.util.ArrayList;
 
 public class PlayScreen implements Screen {
     private final SpriteBatch sb;
@@ -31,12 +34,14 @@ public class PlayScreen implements Screen {
     private DrunkenPOS drunkenPOS;
     private BottomLimit bottomLimit;
     private Player currentPlayer;
-    private Enemy enemy;
     private float timeCount;
+    private Enemy enemy;
+    private ArrayList<Enemy> enemyStack;
 
     private TextureAtlas textureAtlas;
 
     public PlayScreen(TooMuchAGoodSpin game){
+        this.enemyStack = new ArrayList<Enemy>();
         timeCount = 0f;
         textureAtlas = new TextureAtlas("perso.txt");
         this.game = game;
@@ -73,9 +78,16 @@ public class PlayScreen implements Screen {
         ground.moveGround();
         drunkenPOS.update();
         gamecam.update();
+        if (!enemyStack.isEmpty()){
+            for (Enemy enemy : enemyStack){
+                enemy.update();
+            }
+        }
+
         timeCount += dt;
         if(timeCount >= 3){
             enemy = new Enemy(world);
+            enemyStack.add(enemy);
             timeCount = 0f;
         }
 
@@ -92,6 +104,13 @@ public class PlayScreen implements Screen {
         sb.draw(bg, 0,0);
         ground.draw(sb);
         drunkenPOS.draw(sb);
+
+        if (!enemyStack.isEmpty()){
+            for (Enemy enemy : enemyStack){
+                enemy.draw(sb);
+            }
+        }
+
         sb.end();
         hud.stage.draw();
         b2dr.render(world, gamecam.combined);
