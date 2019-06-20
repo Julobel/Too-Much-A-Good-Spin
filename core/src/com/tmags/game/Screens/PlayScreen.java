@@ -90,6 +90,9 @@ public class PlayScreen implements Screen {
             enemyStack.add(enemy);
             timeCount = 0f;
         }
+        if(currentPlayer.life <= 0) {
+            game.setScreen(new GameOverScreen(game, 0, currentPlayer));
+        }
 
     }
 

@@ -15,6 +15,6 @@ public class DesktopLauncher {
 		config.resizable = false;
 
 		//new LwjglApplication(new Main(), config);
-		new LwjglApplication(new TooMuchAGoodSpin(), config);
+		new LwjglApplication(new Main(), config);
 	}
 }

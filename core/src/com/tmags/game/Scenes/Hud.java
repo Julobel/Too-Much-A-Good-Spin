@@ -22,9 +22,6 @@ import com.tmags.game.GameObjects.Player;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 
-import static com.tmags.game.GameObjects.Player.isAlive;
-import static com.tmags.game.GameObjects.Player.life;
-
 public class Hud implements Disposable{
 
     public Stage stage;
@@ -130,8 +127,8 @@ public class Hud implements Disposable{
     public void update (float dt){
         timeCount += dt;
         if(timeCount >= 1){
-            if (!isAlive) {
-                currentPlayer.life = life;
+            if (!currentPlayer.isAlive) {
+                currentPlayer.life = 0;
                 score +=0;
                 worldTimer +=0;
             } else {
@@ -143,6 +140,8 @@ public class Hud implements Disposable{
             stage.draw();
             stage.act();
             countUpLabel.setText(String.format("%03d", worldTimer));
+            score += 10 * (Math.round(worldTimer));
+            currentPlayer.score = score;
             scoreLabel.setText(String.format("%06d", score));
             timeCount = 0f;
         }
