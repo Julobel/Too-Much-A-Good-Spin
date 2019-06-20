@@ -115,7 +115,7 @@ public class PlayScreen implements Screen {
 
         sb.end();
         hud.stage.draw();
-
+        //b2dr.render(world, gamecam.combined);
 
     }
 
