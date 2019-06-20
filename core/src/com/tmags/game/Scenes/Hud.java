@@ -22,6 +22,9 @@ import com.tmags.game.GameObjects.Player;
 import com.tmags.game.TooMuchAGoodSpin;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 
+import static com.tmags.game.GameObjects.Player.isAlive;
+import static com.tmags.game.GameObjects.Player.life;
+
 public class Hud implements Disposable{
 
     public Stage stage;
@@ -80,7 +83,7 @@ public class Hud implements Disposable{
 
         healthBar = new ProgressBar(0f, 100f, 0.1f, false, progressBarStyle);
         healthBar.setValue(currenPlayer.life);
-        healthBar.setAnimateDuration(0.5f);
+       /* healthBar.setAnimateDuration(0.5f);*/
         healthBar.setBounds(370, 600, 550, 15);
 
         stage.addActor(healthBar);
@@ -127,13 +130,18 @@ public class Hud implements Disposable{
     public void update (float dt){
         timeCount += dt;
         if(timeCount >= 1){
-            currentPlayer.life -= 10f;
+            if (!isAlive) {
+                currentPlayer.life = life;
+                score +=0;
+            } else {
+                currentPlayer.life -= 3f;
+                score += 10 * (Math.round(worldTimer));
+            }
             healthBar.setValue(currentPlayer.life);
             stage.draw();
             stage.act();
             worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
-            score += 10 * (Math.round(worldTimer));
             scoreLabel.setText(String.format("%06d", score));
             timeCount = 0f;
         }

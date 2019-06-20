@@ -6,15 +6,15 @@ package com.tmags.game.GameObjects;
 
 public class Player {
 
-    public float life;
-    public boolean isAlive;
+    public static float life;
+    public static boolean isAlive;
 
     public Player() {
         this.life = 100f;
         this.isAlive = true;
     }
 
-    public void losesLife(float value) {
+    public static void losesLife(float value) {
         life -= value;
         if (life <= 0) {
             isAlive = false;
