@@ -44,7 +44,7 @@ public class Enemy extends Sprite{
             shape.setAsBox(randomEnemyDef.textureWidth / 2, randomEnemyDef.textureHeight / 2);
             fdef.shape = shape;
             fdef.friction = 0;
-            fdef.density = 2000;
+            fdef.density = 0.1f;
             setOrigin(getWidth() / 2, getHeight()  / 2);
         }else{
             CircleShape shape = new CircleShape();
@@ -61,8 +61,11 @@ public class Enemy extends Sprite{
         HashMap<String, Object> userData = new HashMap<String,Object>();
         userData.put("objectType","Enemy");
         userData.put("velocityX", Math.random() > 0.5 ? -1000000f : 1000000f);
+
         body.setUserData(userData);
         body.createFixture(fdef);
+
+
         if (isTram()){
             body.setGravityScale(100);
         }else{
@@ -75,7 +78,6 @@ public class Enemy extends Sprite{
 
     public static EnemyDef getRandomEnemy(){
         if (EnemyDefs.isEmpty()){
-            int index = new Random().nextInt(3 - 1 + 1) + 1;
             EnemyDefs.put("biker", new EnemyDef(BIKER, "livreur.png", "", 105, 100, 50));
             EnemyDefs.put("car", new EnemyDef(CAR, "car.png", "", 252, 80, 30));
             EnemyDefs.put("tram", new EnemyDef(TRAM, "tram.png", "sounds/effects/tram.mp3", 500, 130, 100));
@@ -108,7 +110,7 @@ public class Enemy extends Sprite{
     public void draw(SpriteBatch sb){
         boolean flip = (currentDirection == Direction.LEFT);
         Float x = body.getPosition().x - getWidth() / 2;
-        Float y = body.getPosition().y;
+        Float y = body.getPosition().y - getHeight() / 2;
         sb.draw(getTexture(), flip ? x + enemyDef.textureWidth : x, y, flip ? -enemyDef.textureWidth: enemyDef.textureWidth, enemyDef.textureHeight);
     }
 }
