@@ -47,7 +47,7 @@ public class DrunkenPOS extends Sprite {
         currentRegion = playerStand;
         setBounds(0,0, 50, 119);
         setRegion(playerFall);
-        body.setGravityScale(0.8f);
+        body.setGravityScale(0.4f);
     }
 
 

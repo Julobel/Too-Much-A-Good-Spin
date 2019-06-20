@@ -9,18 +9,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
+import com.tmags.game.Utils.EnemyDef;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Enemy extends Sprite{
     private Body body;
     private Direction currentDirection;
     public enum Direction {RIGHT, LEFT};
+    private static HashMap<String, Object> EnemyDefs = new HashMap<String, Object>();
+    private EnemyDef enemyDef;
+    public Enemy(World world,EnemyDef randomEnemyDef) {
 
+        super(new Texture(randomEnemyDef.texturePath));
 
-    public Enemy(World world) {
-        super(new Texture("livreur.png"));
+        enemyDef = randomEnemyDef;
 
         BodyDef bdef = new BodyDef();
         bdef.allowSleep = false;
@@ -48,7 +54,20 @@ public class Enemy extends Sprite{
 
         body.createFixture(fdef);
         body.setGravityScale(2);
-        setBounds(0,0,100, 105);
+        setBounds(0,0,randomEnemyDef.textureWidth, randomEnemyDef.textureHeight);
+    }
+
+    public static EnemyDef getRandomEnemy(){
+        if (EnemyDefs.isEmpty()){
+            EnemyDefs.put("biker", new EnemyDef("livreur.png", 105, 100));
+            EnemyDefs.put("car", new EnemyDef("car.png", 252, 80));
+            EnemyDefs.put("tram", new EnemyDef("tram.png", 500, 130));
+        }
+
+        Random generator = new Random();
+        Object[] values = EnemyDefs.values().toArray();
+        Integer randomInt = generator.nextInt(values.length);
+        return (EnemyDef) values[randomInt];
     }
 
     public void update(){
@@ -66,11 +85,9 @@ public class Enemy extends Sprite{
     }
 
     public void draw(SpriteBatch sb){
-
         boolean flip = (currentDirection == Direction.LEFT);
         Float x = body.getPosition().x - getWidth() / 2;
         Float y = body.getPosition().y;
-        sb.draw(getTexture(), flip ? x + 100 : x, y, flip ? -100 : 100, 105);
-
+        sb.draw(getTexture(), flip ? x + enemyDef.textureWidth : x, y, flip ? -enemyDef.textureWidth: enemyDef.textureWidth, enemyDef.textureHeight);
     }
 }
