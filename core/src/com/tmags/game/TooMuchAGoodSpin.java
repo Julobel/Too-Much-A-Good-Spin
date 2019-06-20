@@ -42,6 +42,6 @@ public class TooMuchAGoodSpin extends Game {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
+
 	}
 }

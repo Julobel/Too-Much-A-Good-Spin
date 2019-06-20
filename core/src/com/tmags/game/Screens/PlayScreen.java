@@ -78,6 +78,9 @@ public class PlayScreen implements Screen {
             enemy = new Enemy(world);
             timeCount = 0f;
         }
+        if(currentPlayer.life <= 0) {
+            game.setScreen(new GameOverScreen(game, 0));
+        }
 
     }
 

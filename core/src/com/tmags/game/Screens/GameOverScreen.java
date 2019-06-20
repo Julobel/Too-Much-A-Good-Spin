@@ -5,6 +5,7 @@
 package com.tmags.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -12,25 +13,31 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
+import com.tmags.game.Main;
+import com.tmags.game.Managers.GameStateManager;
 import com.tmags.game.TooMuchAGoodSpin;
 
 public class GameOverScreen implements Screen {
 
-    private static final int BANNER_WIDTH = 350;
-    private static final int BANNER_HEIGHT = 100;
+    private SpriteBatch sb;
+    private BitmapFont titleFont;
+    private BitmapFont font;
+    private final String title = "Game Over Magle";
+    private int currentItem;
+    private String[] menuItems;
+    private static GlyphLayout glyphLayout = new GlyphLayout();
+    private GameStateManager gsm;
 
     TooMuchAGoodSpin game;
     int score, highscore;
 
-    Texture gameOverBanner;
-    BitmapFont scoreFont;
-
     public GameOverScreen (TooMuchAGoodSpin game, int score) {
         this.game = game;
         this.score = score;
+        game.dispose();
+        gsm = new GameStateManager();
 
         // Recupération du highscore de puis le fichier de sauvegarde
         Preferences prefs = Gdx.app.getPreferences("alcoholicgame");
@@ -44,10 +51,33 @@ public class GameOverScreen implements Screen {
             prefs.flush();
         }
 
-        gameOverBanner = new Texture("game_over.png");
-        // TODO ERROR NOT FOUND FILE ???
-        // scoreFont = new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
+        sb = new SpriteBatch();
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(
+                Gdx.files.internal("fonts/nervous/Nervous.ttf")
+        );
 
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterTitleFont = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterTitleFont.size = 56;
+        parameterTitleFont.magFilter = Texture.TextureFilter.Linear;
+        parameterTitleFont.minFilter = Texture.TextureFilter.Linear;
+        parameterTitleFont.color = new com.badlogic.gdx.graphics.Color(com.badlogic.gdx.graphics.Color.WHITE);
+
+        titleFont = gen.generateFont(parameterTitleFont);
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterFont = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterFont.size = 40;
+        parameterFont.magFilter = Texture.TextureFilter.Linear;
+        parameterFont.minFilter = Texture.TextureFilter.Linear;
+        parameterFont.color = new com.badlogic.gdx.graphics.Color(com.badlogic.gdx.graphics.Color.WHITE);
+
+        font = gen.generateFont(parameterFont);
+
+        glyphLayout.setText(font, title);
+
+        menuItems = new String[] {
+                "Rejouer",
+                "Quitter"
+        };
 
     }
 
@@ -61,21 +91,62 @@ public class GameOverScreen implements Screen {
         // On clear l'écran
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.begin();
 
-        game.batch.draw(
-            gameOverBanner,
-            Gdx.graphics.getWidth() / 2 - BANNER_WIDTH / 2,
-            Gdx.graphics.getHeight() - BANNER_HEIGHT - 100,
-            BANNER_WIDTH,
-            BANNER_HEIGHT
+        sb.setProjectionMatrix(Main.cam.combined);
+        sb.begin();
+
+        // Affichage titre
+        titleFont.draw(
+                sb,
+                title,
+                375,
+                550
         );
 
-        // TODO
-        // GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score : \n" + score, Color.WHITE, 0, Align.left, false);
-        // GlyphLayout highScoreLayout = new GlyphLayout(scoreFont, "Highscore : \n" + highscore, Color.WHITE, 0, Align.left, false);
+        // Affichage menu
+        for (int i = 0; i < menuItems.length; i++) {
+            font.setColor(currentItem == i ? Color.RED : Color.WHITE);
+            font.draw(
+                    sb,
+                    menuItems[i],
+                    560,
+                    370 - 80 * i
+            );
+        }
 
-        game.batch.end();
+        sb.end();
+        update(delta);
+    }
+
+    public void update(float dt) {
+        this.handleInput();
+    }
+
+    public void handleInput() {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            if(currentItem > 0) {
+                currentItem--;
+            }
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            if(currentItem < menuItems.length - 1) {
+                currentItem++;
+            }
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            select();
+        }
+    }
+
+    private void select() {
+        switch (currentItem) {
+            case 0:
+                game.setScreen(new PlayScreen(game));
+                break;
+            case 1:
+                Gdx.app.exit();
+                break;
+        }
     }
 
     @Override
@@ -100,6 +171,8 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        titleFont.dispose();
+        font.dispose();
+        sb.dispose();
     }
 }
