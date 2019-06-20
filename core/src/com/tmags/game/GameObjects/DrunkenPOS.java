@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.tmags.game.Screens.PlayScreen;
+import com.tmags.game.TooMuchAGoodSpin;
 
 import java.util.HashMap;
 
@@ -94,6 +95,11 @@ public class DrunkenPOS extends Sprite {
         Float x = body.getPosition().x - getWidth() / 2;
         Float y = body.getPosition().y - 10;
         sb.draw(currentRegion, flip ? x + 50 : x, y, flip ? -50 : 50, 119);
+
+        if (x >= TooMuchAGoodSpin.WIDTH || x<= 0){
+            Player.life = 0;
+            Player.losesLife(Player.life);
+        }
     }
 
 
