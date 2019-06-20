@@ -102,12 +102,13 @@ public class MenuState extends GameState{
      */
     @Override
     public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            System.out.println(currentItem);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             if(currentItem > 0) {
                 currentItem--;
             }
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             if(currentItem < menuItems.length - 1) {
                 currentItem++;
             }
