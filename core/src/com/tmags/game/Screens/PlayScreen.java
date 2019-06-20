@@ -1,7 +1,6 @@
 package com.tmags.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,13 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.GameObjects.*;
 import com.tmags.game.Scenes.Hud;
 import com.tmags.game.TooMuchAGoodSpin;
+import com.tmags.game.Utils.BonusDef;
 import com.tmags.game.Utils.EnemyDef;
 import com.tmags.game.Utils.WorldContactListener;
 
@@ -36,13 +36,17 @@ public class PlayScreen implements Screen {
     private BottomLimit bottomLimit;
     private Player currentPlayer;
     private float timeCount;
+    private float timeCountB;
     private Enemy enemy;
     private ArrayList<Enemy> enemyStack;
+    private ArrayList<Bonus> bonusStack;
+    private Bonus bonus;
 
     private TextureAtlas textureAtlas;
 
     public PlayScreen(TooMuchAGoodSpin game){
         this.enemyStack = new ArrayList<Enemy>();
+        this.bonusStack = new ArrayList<Bonus>();
         timeCount = 0f;
         textureAtlas = new TextureAtlas("perso.txt");
         this.game = game;
@@ -77,21 +81,33 @@ public class PlayScreen implements Screen {
         hud.update(dt);
         world.step(1/60f, 6,2);
         ground.moveGround();
+        //drunkenPOS.moveDunkenPOS();
         drunkenPOS.update();
         gamecam.update();
-        if (!enemyStack.isEmpty()){
-            for (Enemy enemy : enemyStack){
-                enemy.update();
-            }
+        if (!enemyStack.isEmpty()) for (Enemy enemy : enemyStack) {
+            enemy.update();
+        }
+        if (!bonusStack.isEmpty()) for (Bonus bonus : bonusStack) {
+            bonus.update();
         }
 
         timeCount += dt;
+        timeCountB += dt;
+
         if(timeCount >= 3){
             EnemyDef randomEnemy = Enemy.getRandomEnemy();
             enemy = new Enemy(world,randomEnemy);
             enemyStack.add(enemy);
             timeCount = 0f;
         }
+        if (timeCountB >= 5) {
+                BonusDef randomBonus = Bonus.getRandomBonus();
+                bonus = new Bonus(world, randomBonus);
+                bonusStack.add(bonus);
+                timeCountB = 0f;
+            }
+
+
         if(currentPlayer.life <= 0) {
             game.setScreen(new GameOverScreen(game, 0, currentPlayer));
         }
@@ -113,6 +129,11 @@ public class PlayScreen implements Screen {
         if (!enemyStack.isEmpty()){
             for (Enemy enemy : enemyStack){
                 enemy.draw(sb);
+            }
+        }
+        if (!bonusStack.isEmpty()){
+            for (Bonus bonus : bonusStack){
+                bonus.draw(sb);
             }
         }
 

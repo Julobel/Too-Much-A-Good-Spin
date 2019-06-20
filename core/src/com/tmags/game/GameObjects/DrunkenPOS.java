@@ -28,7 +28,7 @@ public class DrunkenPOS extends Sprite {
         bdef.allowSleep = false;
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        fdef.restitution = 0.8f;
+        fdef.restitution = 0.6f;
         fdef.friction = 0.5f;
 
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -90,6 +90,13 @@ public class DrunkenPOS extends Sprite {
 
     }
 
+/*    public void moveDunkenPOS(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (body.getPosition().y - 10) < 240){
+            body.setLinearVelocity(new Vector2(0, 1000f));
+
+        }
+    }*/
+
     public void draw(SpriteBatch sb){
         boolean flip = (currentDirection == Direction.LEFT);
         Float x = body.getPosition().x - getWidth() / 2;
@@ -100,6 +107,7 @@ public class DrunkenPOS extends Sprite {
             Player.life = 0;
             Player.losesLife(Player.life);
         }
+        System.out.println(y);
     }
 
 

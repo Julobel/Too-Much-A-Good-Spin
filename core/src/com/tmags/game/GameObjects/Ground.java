@@ -44,7 +44,7 @@ public class Ground extends Sprite {
 
 
     public void moveGround(){
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (body.getPosition().y - 10) < 240){
             body.setLinearVelocity(new Vector2(0, 1000f));
             this.currentState = "BUMPING";
         }
@@ -56,7 +56,7 @@ public class Ground extends Sprite {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             Float floorCurrentRotation = body.getTransform().getRotation();
             floorNewRotation = 0f;
-            Float floorActionRation = 0.01f;
+            Float floorActionRation = 0.02f;
             if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
                 floorNewRotation =  floorCurrentRotation - floorActionRation;
             }
