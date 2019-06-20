@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmags.game.GameObjects.*;
 import com.tmags.game.Scenes.Hud;
 import com.tmags.game.TooMuchAGoodSpin;
+import com.tmags.game.Utils.EnemyDef;
 import com.tmags.game.Utils.WorldContactListener;
 
 import java.util.ArrayList;
@@ -86,7 +87,8 @@ public class PlayScreen implements Screen {
 
         timeCount += dt;
         if(timeCount >= 3){
-            enemy = new Enemy(world);
+            EnemyDef randomEnemy = Enemy.getRandomEnemy();
+            enemy = new Enemy(world,randomEnemy);
             enemyStack.add(enemy);
             timeCount = 0f;
         }
@@ -116,7 +118,7 @@ public class PlayScreen implements Screen {
 
         sb.end();
         hud.stage.draw();
-        b2dr.render(world, gamecam.combined);
+
 
     }
 
