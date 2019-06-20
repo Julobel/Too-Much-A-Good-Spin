@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,6 +41,8 @@ public class GameOverScreen implements Screen {
         this.score = score;
         this.currentPlayer = currentPlayer;
         game.dispose();
+        Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/effects/game-over.mp3"));
+        sound.play(1.0f);
         gsm = new GameStateManager();
 
         // Recupération du highscore de puis le fichier de sauvegarde
