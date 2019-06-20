@@ -79,7 +79,7 @@ public class PlayScreen implements Screen {
             timeCount = 0f;
         }
         if(currentPlayer.life <= 0) {
-            game.setScreen(new GameOverScreen(game, 0));
+            game.setScreen(new GameOverScreen(game, 0, currentPlayer));
         }
 
     }

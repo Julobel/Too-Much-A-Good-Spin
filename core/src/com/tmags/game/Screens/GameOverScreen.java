@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.tmags.game.GameObjects.Player;
 import com.tmags.game.Main;
 import com.tmags.game.Managers.GameStateManager;
 import com.tmags.game.TooMuchAGoodSpin;
@@ -29,13 +30,15 @@ public class GameOverScreen implements Screen {
     private String[] menuItems;
     private static GlyphLayout glyphLayout = new GlyphLayout();
     private GameStateManager gsm;
+    private Player currentPlayer;
 
     TooMuchAGoodSpin game;
     int score, highscore;
 
-    public GameOverScreen (TooMuchAGoodSpin game, int score) {
+    public GameOverScreen (TooMuchAGoodSpin game, int score, Player currentPlayer) {
         this.game = game;
         this.score = score;
+        this.currentPlayer = currentPlayer;
         game.dispose();
         gsm = new GameStateManager();
 
@@ -97,22 +100,39 @@ public class GameOverScreen implements Screen {
 
         // Affichage titre
         titleFont.draw(
-                sb,
-                title,
-                375,
-                550
+            sb,
+            title,
+            375,
+            630
         );
+
+
 
         // Affichage menu
         for (int i = 0; i < menuItems.length; i++) {
             font.setColor(currentItem == i ? Color.RED : Color.WHITE);
             font.draw(
-                    sb,
-                    menuItems[i],
-                    560,
-                    370 - 80 * i
+                sb,
+                menuItems[i],
+                560,
+                270 - 80 * i
             );
         }
+
+        font.setColor(Color.WHITE);
+        font.draw(
+                sb,
+                "Score : " + currentPlayer.getScore(),
+                520,
+                480
+        );
+
+        font.draw(
+                sb,
+                "Highscore : " + highscore,
+                480,
+                410
+        );
 
         sb.end();
         update(delta);

@@ -8,10 +8,12 @@ public class Player {
 
     public float life;
     public boolean isAlive;
+    public int score;
 
     public Player() {
         this.life = 100f;
         this.isAlive = true;
+        this.score = 0;
     }
 
     public void losesLife(float value) {
@@ -39,5 +41,13 @@ public class Player {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

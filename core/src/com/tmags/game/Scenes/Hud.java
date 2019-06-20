@@ -134,6 +134,7 @@ public class Hud implements Disposable{
             worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
             score += 10 * (Math.round(worldTimer));
+            currentPlayer.score = score;
             scoreLabel.setText(String.format("%06d", score));
             timeCount = 0f;
         }
