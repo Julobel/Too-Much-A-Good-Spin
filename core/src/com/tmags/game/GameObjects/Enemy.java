@@ -25,6 +25,9 @@ public class Enemy extends Sprite{
     private static HashMap<String, Object> EnemyDefs = new HashMap<String, Object>();
     private EnemyDef enemyDef;
     private Float rotation;
+    public static final String BIKER = "bike";
+    public static final String CAR = "car";
+    public static final String TRAM = "tram";
 
     public Enemy(World world,EnemyDef randomEnemyDef) {
         super(new Texture(randomEnemyDef.texturePath));
@@ -72,9 +75,10 @@ public class Enemy extends Sprite{
 
     public static EnemyDef getRandomEnemy(){
         if (EnemyDefs.isEmpty()){
-            EnemyDefs.put("biker", new EnemyDef("livreur.png", 105, 100, 50));
-            EnemyDefs.put("car", new EnemyDef("car.png", 252, 80, 30));
-            EnemyDefs.put("tram", new EnemyDef("tram.png", 500, 130, 100));
+            int index = new Random().nextInt(3 - 1 + 1) + 1;
+            EnemyDefs.put("biker", new EnemyDef(BIKER, "livreur.png", "", 105, 100, 50));
+            EnemyDefs.put("car", new EnemyDef(CAR, "car.png", "", 252, 80, 30));
+            EnemyDefs.put("tram", new EnemyDef(TRAM, "tram.png", "sounds/effects/tram.mp3", 500, 130, 100));
         }
 
         Random generator = new Random();
@@ -104,7 +108,7 @@ public class Enemy extends Sprite{
     public void draw(SpriteBatch sb){
         boolean flip = (currentDirection == Direction.LEFT);
         Float x = body.getPosition().x - getWidth() / 2;
-        Float y = body.getPosition().y - getHeight() / 2;
+        Float y = body.getPosition().y;
         sb.draw(getTexture(), flip ? x + enemyDef.textureWidth : x, y, flip ? -enemyDef.textureWidth: enemyDef.textureWidth, enemyDef.textureHeight);
     }
 }

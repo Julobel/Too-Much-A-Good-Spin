@@ -3,6 +3,7 @@ package com.tmags.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ import com.tmags.game.Utils.EnemyDef;
 import com.tmags.game.Utils.WorldContactListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayScreen implements Screen {
     private final SpriteBatch sb;
@@ -38,6 +40,8 @@ public class PlayScreen implements Screen {
     private float timeCount;
     private Enemy enemy;
     private ArrayList<Enemy> enemyStack;
+    private Sound sound;
+    private long soundId;
 
     private TextureAtlas textureAtlas;
 
@@ -91,11 +95,32 @@ public class PlayScreen implements Screen {
             enemy = new Enemy(world,randomEnemy);
             enemyStack.add(enemy);
             timeCount = 0f;
+            if (randomEnemy.label.equals(Enemy.BIKER)) {
+                getRandomBikeSoundEffect(randomEnemy);
+            } else if (randomEnemy.label.equals(Enemy.CAR)) {
+                getRandomCarSoundEffect(randomEnemy);
+            }
+            sound = Gdx.audio.newSound(Gdx.files.internal(randomEnemy.soundEffectPath));
+            soundId = sound.play(1.0f);
         }
         if(currentPlayer.life <= 0) {
+            sound.stop(soundId);
             game.setScreen(new GameOverScreen(game, 0, currentPlayer));
         }
 
+    }
+
+    private void getRandomBikeSoundEffect(EnemyDef randomEnemy) {
+        int index = new Random().nextInt(3 - 1 + 1) + 1;
+        String bikeSoundEffectPath = "sounds/effects/bike-" + index + ".mp3";
+        randomEnemy.setSoundEffectPath(bikeSoundEffectPath);
+    }
+
+
+    private void getRandomCarSoundEffect(EnemyDef randomEnemy) {
+        int index = new Random().nextInt(4 - 1 + 1) + 1;
+        String bikeSoundEffectPath = "sounds/effects/car-" + index + ".mp3";
+        randomEnemy.setSoundEffectPath(bikeSoundEffectPath);
     }
 
     @Override
