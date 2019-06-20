@@ -133,14 +133,15 @@ public class Hud implements Disposable{
             if (!isAlive) {
                 currentPlayer.life = life;
                 score +=0;
+                worldTimer +=0;
             } else {
                 currentPlayer.life -= 3f;
                 score += 10 * (Math.round(worldTimer));
+                worldTimer++;
             }
             healthBar.setValue(currentPlayer.life);
             stage.draw();
             stage.act();
-            worldTimer++;
             countUpLabel.setText(String.format("%03d", worldTimer));
             scoreLabel.setText(String.format("%06d", score));
             timeCount = 0f;
