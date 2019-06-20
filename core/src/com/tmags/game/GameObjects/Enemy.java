@@ -29,27 +29,14 @@ public class Enemy extends Sprite{
     public Enemy(World world,EnemyDef randomEnemyDef) {
         super(new Texture(randomEnemyDef.texturePath));
         enemyDef = randomEnemyDef;
-
         BodyDef bdef = new BodyDef();
         bdef.allowSleep = false;
         FixtureDef fdef = new FixtureDef();
-
         fdef.filter.groupIndex = -1;
-
-        if (randomEnemyDef.texturePath == "tram.png"){
-            PolygonShape shape = new PolygonShape();
-            shape.setAsBox(randomEnemyDef.textureWidth / 2, randomEnemyDef.textureHeight / 2);
-            fdef.shape = shape;
-            fdef.friction = 0;
-            fdef.density = 2000;
-            setOrigin(getWidth() / 2, getHeight()  / 2);
-        }else{
-            CircleShape shape = new CircleShape();
-            shape.setRadius(enemyDef.hitBoxRadius);
-            fdef.shape = shape;
-            fdef.density = 0.1f;
-
-        }
+        CircleShape shape = new CircleShape();
+        shape.setRadius(enemyDef.hitBoxRadius);
+        fdef.shape = shape;
+        fdef.density = 0.1f;
 
         bdef.type = BodyDef.BodyType.DynamicBody;
         int xPosition = (int)(Math.random()*((200-800)+1))+800;
@@ -58,8 +45,11 @@ public class Enemy extends Sprite{
         HashMap<String, Object> userData = new HashMap<String,Object>();
         userData.put("objectType","Enemy");
         userData.put("velocityX", Math.random() > 0.5 ? -1000000f : 1000000f);
+
         body.setUserData(userData);
         body.createFixture(fdef);
+
+
         if (isTram()){
             body.setGravityScale(100);
         }else{
@@ -74,7 +64,7 @@ public class Enemy extends Sprite{
         if (EnemyDefs.isEmpty()){
             EnemyDefs.put("biker", new EnemyDef("livreur.png", 105, 100, 50));
             EnemyDefs.put("car", new EnemyDef("car.png", 252, 80, 30));
-            EnemyDefs.put("tram", new EnemyDef("tram.png", 500, 130, 100));
+            EnemyDefs.put("tram", new EnemyDef("tram.png", 500, 130, 80));
         }
 
         Random generator = new Random();
