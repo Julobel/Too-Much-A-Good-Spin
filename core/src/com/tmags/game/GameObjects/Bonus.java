@@ -29,6 +29,8 @@ public class Bonus extends Sprite{
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
 
+        fdef.filter.groupIndex = -1;
+
         // fdef.restitution = 0.8f;
         fdef.density = 0.1f;
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -55,8 +57,8 @@ public class Bonus extends Sprite{
 
     public static BonusDef getRandomBonus(){
         if (BonusDefs.isEmpty()){
-            BonusDefs.put("beer", new BonusDef("beer_03.png", 105, 100));
-            //BonusDefs.put("clope", new BonusDef("car.png", 252, 80));
+            BonusDefs.put("beer", new BonusDef("beer_03.png", 55, 50));
+            BonusDefs.put("clope", new BonusDef("clope.png", 60, 15));
         }
 
         Random generator = new Random();

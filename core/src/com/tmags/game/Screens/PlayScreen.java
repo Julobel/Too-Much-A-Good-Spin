@@ -1,7 +1,9 @@
 package com.tmags.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +22,7 @@ import com.tmags.game.Utils.EnemyDef;
 import com.tmags.game.Utils.WorldContactListener;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayScreen implements Screen {
     private final SpriteBatch sb;
@@ -43,6 +46,8 @@ public class PlayScreen implements Screen {
     private Bonus bonus;
 
     private TextureAtlas textureAtlas;
+    private Sound sound;
+    private Long soundId;
 
     public PlayScreen(TooMuchAGoodSpin game){
         this.enemyStack = new ArrayList<Enemy>();
@@ -81,7 +86,6 @@ public class PlayScreen implements Screen {
         hud.update(dt);
         world.step(1/60f, 6,2);
         ground.moveGround();
-        //drunkenPOS.moveDunkenPOS();
         drunkenPOS.update();
         gamecam.update();
         if (!enemyStack.isEmpty()) for (Enemy enemy : enemyStack) {
@@ -99,6 +103,13 @@ public class PlayScreen implements Screen {
             enemy = new Enemy(world,randomEnemy);
             enemyStack.add(enemy);
             timeCount = 0f;
+            if (randomEnemy.label.equals(Enemy.BIKER)) {
+                getRandomBikeSoundEffect(randomEnemy);
+            } else if (randomEnemy.label.equals(Enemy.CAR)) {
+                getRandomCarSoundEffect(randomEnemy);
+            }
+            sound = Gdx.audio.newSound(Gdx.files.internal(randomEnemy.soundEffectPath));
+            soundId = sound.play(1.0f);
         }
         if (timeCountB >= 5) {
                 BonusDef randomBonus = Bonus.getRandomBonus();
@@ -109,9 +120,23 @@ public class PlayScreen implements Screen {
 
 
         if(currentPlayer.life <= 0) {
+            sound.stop(soundId);
             game.setScreen(new GameOverScreen(game, 0, currentPlayer));
         }
 
+    }
+
+    private void getRandomBikeSoundEffect(EnemyDef randomEnemy) {
+        int index = new Random().nextInt(3 - 1 + 1) + 1;
+        String bikeSoundEffectPath = "sounds/effects/bike-" + index + ".mp3";
+        randomEnemy.setSoundEffectPath(bikeSoundEffectPath);
+    }
+
+
+    private void getRandomCarSoundEffect(EnemyDef randomEnemy) {
+        int index = new Random().nextInt(4 - 1 + 1) + 1;
+        String bikeSoundEffectPath = "sounds/effects/car-" + index + ".mp3";
+        randomEnemy.setSoundEffectPath(bikeSoundEffectPath);
     }
 
     @Override

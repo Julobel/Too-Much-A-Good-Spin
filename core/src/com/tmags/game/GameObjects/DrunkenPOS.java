@@ -35,6 +35,7 @@ public class DrunkenPOS extends Sprite {
         bdef.position.set(640,190);
 
 
+
         body = world.createBody(bdef);
         shape.setRadius(10);
         fdef.shape = shape;

@@ -4,6 +4,8 @@
 
 package com.tmags.game.GameObjects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,46 +24,63 @@ public class Enemy extends Sprite{
     public enum Direction {RIGHT, LEFT};
     private static HashMap<String, Object> EnemyDefs = new HashMap<String, Object>();
     private EnemyDef enemyDef;
+    private Float rotation;
+    public static final String BIKER = "bike";
+    public static final String CAR = "car";
+    public static final String TRAM = "tram";
+
     public Enemy(World world,EnemyDef randomEnemyDef) {
-
         super(new Texture(randomEnemyDef.texturePath));
-
         enemyDef = randomEnemyDef;
 
         BodyDef bdef = new BodyDef();
         bdef.allowSleep = false;
         FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
 
-        // fdef.restitution = 0.8f;
-        fdef.density = 0.1f;
+        fdef.filter.groupIndex = -1;
+
+        if (randomEnemyDef.texturePath == "tram.png"){
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(randomEnemyDef.textureWidth / 2, randomEnemyDef.textureHeight / 2);
+            fdef.shape = shape;
+            fdef.friction = 0;
+            fdef.density = 0.1f;
+            setOrigin(getWidth() / 2, getHeight()  / 2);
+        }else{
+            CircleShape shape = new CircleShape();
+            shape.setRadius(enemyDef.hitBoxRadius);
+            fdef.shape = shape;
+            fdef.density = 0.1f;
+
+        }
+
         bdef.type = BodyDef.BodyType.DynamicBody;
-
         int xPosition = (int)(Math.random()*((200-800)+1))+800;
-
         bdef.position.set(xPosition,800);
         body = world.createBody(bdef);
-
-        shape.setRadius(10);
-        fdef.shape = shape;
-
         HashMap<String, Object> userData = new HashMap<String,Object>();
         userData.put("objectType","Enemy");
         userData.put("velocityX", Math.random() > 0.5 ? -1000000f : 1000000f);
 
-
         body.setUserData(userData);
-
         body.createFixture(fdef);
-        body.setGravityScale(2);
+
+
+        if (isTram()){
+            body.setGravityScale(100);
+        }else{
+            body.setGravityScale(2);
+        }
+
+
         setBounds(0,0,randomEnemyDef.textureWidth, randomEnemyDef.textureHeight);
     }
 
     public static EnemyDef getRandomEnemy(){
         if (EnemyDefs.isEmpty()){
-            EnemyDefs.put("biker", new EnemyDef("livreur.png", 105, 100));
-            EnemyDefs.put("car", new EnemyDef("car.png", 252, 80));
-            EnemyDefs.put("tram", new EnemyDef("tram.png", 500, 130));
+            EnemyDefs.put("biker", new EnemyDef(BIKER, "livreur.png", "", 105, 100, 50));
+            EnemyDefs.put("car", new EnemyDef(CAR, "car.png", "", 252, 80, 30));
+            EnemyDefs.put("tram", new EnemyDef(TRAM, "tram.png", "sounds/effects/tram.mp3", 500, 130, 100));
         }
 
         Random generator = new Random();
@@ -84,10 +103,14 @@ public class Enemy extends Sprite{
         }
     }
 
+    public Boolean isTram(){
+        return enemyDef.texturePath == "tram.png";
+    }
+
     public void draw(SpriteBatch sb){
         boolean flip = (currentDirection == Direction.LEFT);
         Float x = body.getPosition().x - getWidth() / 2;
-        Float y = body.getPosition().y;
+        Float y = body.getPosition().y - getHeight() / 2;
         sb.draw(getTexture(), flip ? x + enemyDef.textureWidth : x, y, flip ? -enemyDef.textureWidth: enemyDef.textureWidth, enemyDef.textureHeight);
     }
 }

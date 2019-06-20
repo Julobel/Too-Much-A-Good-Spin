@@ -25,6 +25,7 @@ public class Ground extends Sprite {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
+        fdef.density = 1000000;
         bdef.type = BodyDef.BodyType.KinematicBody;
         Integer floorHeight = 120;
         bdef.position.set(gamecam.position.x, 70);
